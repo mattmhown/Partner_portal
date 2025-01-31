@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost:3306";  // Change if your host is different
+$servername = "cp-wc04";  // Change if your host is different
 $username = "admin"; 
 $password = "Bitemefear8"; 
 $dbname = "howncoma_PartnerPortal"; 
