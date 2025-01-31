@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Preload font for faster load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css?family=Oswald:300&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Swiper CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+    <style>
+      /* Background image for interactive card section */
+      .interactive-card-section {
+        background-image: url("https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/4e873979-7f33-4843-82e6-12e42cf5ce0b.jpeg");
+        background-size: cover;
+        background-position: center;
+        padding: 50px 0;
+      }
+
+      /* New Menu/Nav CSS */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Oswald", sans-serif;
+        background: #fff;
+        text-align: center;
+      }
+
+      .logo-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.8); /* Slightly transparent */
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        padding: 0px 0px;
+      }
+
+      .logo {
+        max-width: 10%;
+        height: auto;
+        transition: max-width 0.3s ease;
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+
+      .menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .menu a {
+        color: #51bbc4;
+        text-decoration: none;
+        padding: 10px 40px;
+        font-size: 22px;
+        text-transform: uppercase;
+        transition: background 0.3s ease;
+      }
+
+      .menu a:hover {
+        background: #51bbc4;
+        color: #fff;
+      }
+
+      @media screen and (max-width: 768px) {
+        .logo {
+          max-width: 40%;
+        }
+
+        .menu {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0);
+          border-top: 1px solid #51bbc4;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          max-height: 300px;
+          overflow-y: auto;
+          z-index: 1000;
+          opacity: 0;
+          transform: translateY(-20px);
+          transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .menu.menu-open {
+          display: flex;
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .menu-toggle {
+          display: block;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          padding: 10px;
+          font-size: 24px;
+          background: none;
+          border: none;
+          color: #51bbc4;
+          cursor: pointer;
+          z-index: 999;
+        }
+
+        .menu-toggle:hover {
+          background-color: #51bbc4;
+          color: #fff;
+        }
+      }
+
+      /* Interactive card styles */
+      .interactive-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+      }
+      .interactive-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .interactive-card .card-img-top {
+        transition: transform 0.3s ease, filter 0.3s ease;
+        height: 305px; /* Fixed height for consistency */
+        object-fit: cover; /* Ensure image covers the area */
+      }
+      .interactive-card:hover .card-img-top {
+        transform: scale(1);
+        filter: grayscale(90%);
+      }
+      .interactive-card .btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -270%);
+        display: none;
+        font-size: 1.5rem;
+        padding: 10px 20px;
+        background-color: rgba(81, 187, 196, 1);
+        border: none;
+        color: white;
+        z-index: 2;
+      }
+      .interactive-card:hover .btn {
+        display: block;
+      }
+      .interactive-card .card-body {
+        position: relative;
+        text-align: center;
+        z-index: 1;
+      }
+      .interactive-card .card-title {
+        color: #51bbc4; /* Title color */
+      }
+
+      /* Remove borders from videos */
+      video {
+        border: none !important;
+      }
+
+      /* Adjust title/header font colors */
+      h1 {
+        color: #51bbc4;
+        font-size: 3em;
+        font-weight: bold;
+        font-style: normal;
+        font-family: "Arial", sans-serif;
+      }
+      h2 {
+        color: #51bbc4;
+        font-size: 2em;
+        font-weight: normal;
+        font-style: normal;
+        font-family: "Arial", sans-serif;
+      }
+      h3 {
+        color: #51bbc4;
+        font-size: 1.25em;
+        font-weight: normal;
+        font-style: normal;
+        font-family: "Arial", sans-serif;
+      }
+      h4 {
+        color: #51bbc4;
+        font-size: 0.8em;
+        font-weight: normal;
+        font-style: normal;
+        font-family: "Arial", sans-serif;
+      }
+      h5 {
+        color: black;
+        font-size: 1.35em;
+        font-weight: normal;
+        font-style: normal;
+        font-family: "Arial", sans-serif;
+      }
+
+      /* Background and font color for the text section */
+      .text-section {
+        background-image: url("https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/165f0107-97c4-4879-a2c3-c88661183451.jpeg");
+        background-size: cover;
+        background-position: center;
+        padding: 20px 0;
+        text-align: center;
+        color: #51bbc4;
+      }
+      .text-section h2 {
+        color: #51bbc4;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #ffffff;
+      }
+
+      .testimonial-carousel {
+        padding: 50px 0;
+        background-color: #ffffff;
+      }
+
+      .swiper {
+        width: 100%;
+        padding: 20px 0;
+      }
+      .spacer {
+        height: 30px; /* Adjust height for spacing */
+      }
+
+      .testimonial-card {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin: 0 10px;
+      }
+
+      .testimonial-card p {
+        font-size: 16px;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .testimonial-card h4 {
+        font-size: 18px;
+        color: #51bbc4;
+        margin: 10px 0 5px;
+      }
+
+      .testimonial-card small {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .swiper-pagination {
+        position: relative;
+        margin-top: 20px;
+      }
+
+      .swiper-pagination-bullet {
+        width: 10px;
+        height: 10px;
+        background-color: #ccc;
+        opacity: 1;
+      }
+
+      .swiper-pagination-bullet-active {
+        background-color: #51bbc4;
+      }
+
+      /* Footer styles */
+      footer {
+        background-color: #333;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+      }
+      footer img {
+        height: 200px;
+        margin-bottom: 10px;
+      }
+      footer p {
+        margin: 5px 0;
+      }
+      footer a {
+        color: #51bbc4;
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Business Achievements Block */
+      .achievement-container {
+        background-image: url("https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/165f0107-97c4-4879-a2c3-c88661183451.jpeg");
+        background-size: cover;
+        background-position: centre;
+        background-repeat: no-repeat;
+        padding: 20px 0;
+        margin: 0;
+        min-height: 10vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        overflow: hidden;
+      }
+      .achievement-container.lazy-loaded {
+        background-image: url("https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/165f0107-97c4-4879-a2c3-c88661183451.jpeg");
+      }
+      .achievement-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        transition: transform 0.3s ease;
+        flex: 1 1 calc(20% - 20px);
+        max-width: calc(20% - 20px);
+        box-sizing: border-box;
+        text-align: center;
+      }
+      .achievement-item:hover {
+        transform: translateY(-10px);
+      }
+      .achievement-icon {
+        font-size: 3rem;
+        margin-right: 15px;
+        color: #51bbc4;
+      }
+      .achievement-number {
+        font-size: 2rem;
+        font-weight: normal;
+        margin: 0;
+        color: white;
+      }
+      .achievement-label {
+        font-size: 1rem;
+        margin-top: 5px;
+        text-transform: uppercase;
+        color: #ccc;
+      }
+      @media screen and (max-width: 768px) {
+        .achievement-item {
+          flex: 1 1 calc(50% - 20px);
+          max-width: calc(50% - 20px);
+        }
+      }
+      @media screen and (max-width: 480px) {
+        .achievement-item {
+          flex: 1 1 100%;
+          max-width: 100%;
+        }
+      }
+
+      /* Full Width Image */
+      .full-width-image {
+        position: relative;
+        width: 100%;
+        height: 100vh; /* Full height of the viewport */
+        background-image: url("https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/41ea411f-f18f-487a-b142-b62f7e85c477.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        overflow: hidden; /* Prevents any overflow issues */
+      }
+    </style>
+    <script>
+      // Lazy loading background image
+      document.addEventListener("DOMContentLoaded", function () {
+        var container = document.querySelector(".achievement-container");
+        container.classList.add("lazy-loaded");
+      });
+
+      // Toggle menu for mobile
+      document
+        .querySelector(".menu-toggle")
+        .addEventListener("click", function () {
+          document.querySelector(".menu").classList.toggle("menu-open");
+        });
+    </script>
+  </head>
+  <body>
+    <!-- New Menu/Nav -->
+    <div class="logo-container">
+      <img
+        src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/afc3b303-2b1b-4eee-b571-bd8261e721c8.png"
+        alt="Logo"
+        class="logo"
+        loading="lazy"
+      />
+      <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
+      <div class="menu">
+        <a href="/">Home</a>
+        <a href="/submit-new-lead">Submit Lead</a>
+        <a href="/lead-overview">Overview</a>
+        <a href="/summary">Summary</a>
+        <a href="/hown-life">HOWNlife</a>
+        <a href="/contact-us">Contact Us</a>
+      </div>
+    </div>
+
+    <!-- Interactive Card Section -->
+    <div class="interactive-card-section">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card interactive-card">
+              <img
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/guy-with-phone-account-285d62.svg"
+                class="card-img-top"
+                alt="Submit a Lead"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Submit a Lead</h5>
+                <p class="card-text">
+                  Submit new leads quickly and efficiently.
+                </p>
+                <a href="#" class="btn btn-primary">Submit Lead</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card interactive-card">
+              <img
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/797172da-e37f-4a77-8ee1-3ca4db7435d5.png"
+                class="card-img-top"
+                alt="HOWNready"
+              />
+              <div class="card-body">
+                <h5 class="card-title">HOWNready</h5>
+                <p class="card-text">Get your clients HOWNready.</p>
+                <a href="#" class="btn btn-primary">HOWNready</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card interactive-card">
+              <img
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/guy-multitasking-51b1b8.svg"
+                class="card-img-top"
+                alt="Lead Overview"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Lead Overview</h5>
+                <p class="card-text">View and manage submitted leads.</p>
+                <a href="#" class="btn btn-primary">Lead Overview</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-3">
+          <div class="col-md-4">
+            <div class="card interactive-card">
+              <img
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/guy-with-charts-285d62.svg"
+                class="card-img-top"
+                alt="Deal Summary"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Deal Summary</h5>
+                <p class="card-text">Track your deals efficiently.</p>
+                <a href="#" class="btn btn-primary">Deal Summary</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card interactive-card">
+              <img
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/girl-exploring-map-285d62.svg"
+                class="card-img-top"
+                alt="HOWNlife"
+              />
+              <div class="card-body">
+                <h5 class="card-title">HOWNlife</h5>
+                <p class="card-text">Explore the HOWNlife platform.</p>
+                <a href="#" class="btn btn-primary">HOWNlife</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card interactive-card">
+              <img
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/email-285d62.svg"
+                class="card-img-top"
+                alt="Contact Us"
+              />
+              <div class="card-body">
+                <h5 class="card-title">Contact Us</h5>
+                <p class="card-text">Get in touch with us easily.</p>
+                <a href="#" class="btn btn-primary">Contact Us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Achievements Block -->
+    <div class="achievement-container">
+      <div class="achievement-item">
+        <i class="fas fa-calendar-alt achievement-icon"></i>
+        <div>
+          <div class="achievement-number">&nbsp;&nbsp;2017</div>
+          <div class="achievement-label">Since</div>
+        </div>
+      </div>
+      <div class="achievement-item">
+        <i class="fas fa-users achievement-icon"></i>
+        <div>
+          <div class="achievement-number">250+</div>
+          <div class="achievement-label">Clients</div>
+        </div>
+      </div>
+      <div class="achievement-item">
+        <i class="fas fa-chart-line achievement-icon"></i>
+        <div>
+          <div class="achievement-number">$270m+</div>
+          <div class="achievement-label">Client Volume</div>
+        </div>
+      </div>
+      <div class="achievement-item">
+        <i class="fas fa-handshake achievement-icon"></i>
+        <div>
+          <div class="achievement-number">35+</div>
+          <div class="achievement-label">Partners</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOWN Financial Introduction -->
+    <div class="container mt-5 text-center">
+      <h1>HOWN Introduction</h1>
+      <h5>
+        Market leading technology. Fully integrated with our mortgage platform
+        to provide our partners seamless, unparalleled transparency.
+      </h5>
+      <h3 style="margin-top: 50px">HOWN Financial Overview</h3>
+      <div
+        style="
+          max-width: 100%;
+          overflow: hidden;
+          display: flex;
+          justify-content: center;
+        "
+      >
+        <video style="width: 100%; max-width: 600px; height: auto" controls>
+          <source
+            src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/4e784757-0e29-4a65-b575-93f485de4f1f.mp4"
+            type="video/mp4"
+          />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Side by Side Videos -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-6">
+          <h3 style="text-align: center">HOWNready Assessment</h3>
+          <div style="max-width: 100%; overflow: hidden">
+            <video style="width: 100%; height: auto" controls>
+              <source
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/32408fdd-4aba-4f16-82f3-502b425349c0.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h3 style="text-align: center">How to refer a client?</h3>
+          <div style="max-width: 100%; overflow: hidden">
+            <video style="width: 100%; height: auto" controls>
+              <source
+                src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/db1d972c-deae-4888-8b6d-edb5bde9c62b.mp4"
+                type="video/mp4"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text Section with Background -->
+    <div class="text-section" style="margin-bottom: 0">
+      <h2>
+        ⪩Residential &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⪩Commercial
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⪩SMSF
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⪩Investment
+      </h2>
+    </div>
+
+    <!-- Testimony -->
+    <div className="text-center my-6">
+      <div class="spacer"></div>
+      <h2 className="text-2xl font-bold">What Our Customers Say</h2>
+      <TestimonialCarousel />
+    </div>
+    <div class="testimonial-carousel">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "Matt was fantastic! My partner and I were purchasing our first
+                family home and had so many questions. He was always available
+                to answer them with patience and clarity. Highly recommend!"
+              </p>
+              <h4>Morgan J</h4>
+              <small>31, Young family, Sole income</small>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "Refinancing felt overwhelming, but Matt made it quick and
+                stress-free. His professionalism and platform are top-notch. I
+                now have a much better rate, and I couldn’t be happier!"
+              </p>
+              <h4>Lang G</h4>
+              <small>37, Single professional</small>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "Our settlement process was full of delays, but Matt remained
+                calm and proactive. His tech platform kept us informed every
+                step of the way. Truly impressive!"
+              </p>
+              <h4>Amy S</h4>
+              <small>44, Dual income</small>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "I had challenges with my credit history, but Matt worked
+                tirelessly to find the best solution. His genuine care and
+                competence turned an impossible situation into a success!"
+              </p>
+              <h4>William M</h4>
+              <small>39, Single professional</small>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "As an investor with a complex portfolio, I needed someone who
+                understood my financial situation. Matt not only delivered but
+                exceeded my expectations."
+              </p>
+              <h4>Brendan L</h4>
+              <small>48, Property Investor</small>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="testimonial-card">
+              <p>
+                "As a first-time home buyer, I had no idea what to expect. Matt
+                was patient, clear, and incredibly supportive throughout the
+                whole process. I can’t recommend him enough!"
+              </p>
+              <h4>Jason W</h4>
+              <small>24, Tradesman</small>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".mySwiper", {
+        slidesPerView: 2, // Show 2 testimonials at a time
+        spaceBetween: 20,
+        autoplay: {
+          delay: 5000, // Auto-scroll every 5 seconds
+          disableOnInteraction: false, // Keeps autoplay running even after user interaction
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        breakpoints: {
+          320: { slidesPerView: 1 }, // 1 testimonial on small screens
+          768: { slidesPerView: 2 }, // 2 testimonials on larger screens
+        },
+      });
+    </script>
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <img
+          src="https://www.hown.com.au/wp-content/uploads/2024/02/Color-logo-no-background-1-2048x2024.png"
+          alt="HOWN Finance & Home Loans"
+        />
+        <p>Servicing Australia Wide</p>
+        <p>
+          Email: <a href="mailto:partners@hown.com.au">partners@hown.com.au</a>
+        </p>
+        <p>Phone: <a href="tel:+61411504199">0411 504 199</a></p>
+      </div>
+    </footer>
+  </body>
+</html>
