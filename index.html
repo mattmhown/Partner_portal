@@ -100,7 +100,7 @@
           top: 60px;
           left: 0;
           right: 0;
-          background: rgba(255, 255, 255, 0);
+          background: rgba(255, 255, 255, 0.9);
           border-top: 1px solid #51bbc4;
           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
           max-height: 300px;
@@ -410,32 +410,34 @@
       });
 
       // Toggle menu for mobile
-      document
-        .querySelector(".menu-toggle")
-        .addEventListener("click", function () {
-          document.querySelector(".menu").classList.toggle("menu-open");
-        });
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .querySelector(".menu-toggle")
+          .addEventListener("click", function () {
+            document.querySelector(".menu").classList.toggle("menu-open");
+          });
+      });
     </script>
   </head>
   <body>
     <!-- New Menu/Nav -->
     <div class="logo-container">
-      <img
-        src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/afc3b303-2b1b-4eee-b571-bd8261e721c8.png"
-        alt="Logo"
-        class="logo"
-        loading="lazy"
-      />
-      <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
-      <div class="menu">
-        <a href="/">Home</a>
-        <a href="/submit-new-lead">Submit Lead</a>
-        <a href="/lead-overview">Overview</a>
-        <a href="/summary">Summary</a>
-        <a href="/hown-life">HOWNlife</a>
-        <a href="/contact-us">Contact Us</a>
-      </div>
-    </div>
+  <img
+    src="https://assets.softr-files.com/applications/9521e7b5-95ff-4a2d-9c75-3e27ff478449/assets/afc3b303-2b1b-4eee-b571-bd8261e721c8.png"
+    alt="Logo"
+    class="logo"
+    loading="lazy"
+  />
+  <button class="menu-toggle" aria-label="Toggle Menu">&#9776;</button>
+  <div class="menu">
+    <a href="/">Home</a>
+    <a href="/submit-new-lead">Submit Lead</a>
+    <a href="/lead-overview">Overview</a>
+    <a href="/summary">Summary</a>
+    <a href="/hown-life">HOWNlife</a>
+    <a href="/contact-us">Contact Us</a>
+  </div>
+</div>
 
     <!-- Interactive Card Section -->
     <div class="interactive-card-section">
